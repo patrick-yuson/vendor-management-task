@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Acme",
+    "contact": "John Doe",
+    "email": "john@acmesupplies.com",
+    "phone": "555-1234",
+    "address": "123 Elm Street, Springfield"
+  },
+  {
+    "id": 2,
+    "name": "Global Tech",
+    "contact": "Jane Smith",
+    "email": "jane@globaltech.com",
+    "phone": "555-5678",
+    "address": "456 Oak Avenue, Metropolis"
+  },
+  {
+    "id": 3,
+    "name": "Supply Hub",
+    "contact": "Mike Johnson",
+    "email": "mike@supplyhub.com",
+    "phone": "555-8765",
+    "address": "789 Pine Road, Gotham"
+  }
+]
