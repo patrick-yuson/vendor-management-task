@@ -38,10 +38,10 @@ export default function AddVendor() {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" component="h1" gutterBottom>
+      {/* <Typography variant="h4" component="h1" gutterBottom>
         Add New Vendor
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      </Typography> */}
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '75px' }}>
         <TextField
           margin="normal"
           required
