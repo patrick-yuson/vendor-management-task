@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Navbar from '@/components/Navbar';
+import { MobileProvider } from '@/contexts/MobileContext';
 
 const theme = createTheme({
   palette: {
@@ -27,7 +29,10 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <MobileProvider>
+          <Navbar mainComponent={<Component {...pageProps} />}/>
+        </MobileProvider>
+        {/* <Component {...pageProps} /> */}
       </ThemeProvider>
     </React.Fragment>
   );
