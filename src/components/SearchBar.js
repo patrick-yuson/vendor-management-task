@@ -14,6 +14,7 @@ const SearchBar = () => {
             display: 'flex',
             alignItems: 'center',
             width: '100%',
+            justifyContent: { xs: 'center', sm: 'left' }
         }}
     >
         <TextField
