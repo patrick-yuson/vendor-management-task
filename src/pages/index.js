@@ -25,6 +25,7 @@ import SearchBar from '@/components/SearchBar';
 
 export default function Home() {
   const [vendors, setVendors] = useState([]);
+  const [filteredVendors, setFilteredVendors] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedVendorId, setSelectedVendorId] = useState(null);
   const { isMobileView, isMediumView } = useMobile(); 
@@ -32,7 +33,10 @@ export default function Home() {
   useEffect(() => {
     fetch('/api/vendors')
       .then((res) => res.json())
-      .then((data) => setVendors(data));
+      .then((data) => { 
+        setVendors(data)
+        setFilteredVendors(data)
+      });
   }, []);
 
   const handleClickOpen = (id) => {
@@ -44,6 +48,10 @@ export default function Home() {
     setOpen(false);
     setSelectedVendorId(null);
   };
+
+  const handleSearch = (value) => {
+    setFilteredVendors(value);
+  }
 
   const handleDelete = async () => {
     try {
@@ -72,9 +80,12 @@ export default function Home() {
           Add Vendor
         </Button>
       </Link> */}
-      <SearchBar />
+      <SearchBar 
+        onSearch={handleSearch}
+        vendors={vendors}
+      />
       {isMobileView ?
-        vendors.map((vendor) => (
+        filteredVendors.map((vendor) => (
           <Box 
             key={vendor.id} 
             sx={{ 
@@ -139,7 +150,7 @@ export default function Home() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {vendors.map((vendor) => (
+                {filteredVendors.map((vendor) => (
                   <TableRow key={vendor.id}>
                     <TableCell>{vendor.id}</TableCell>
                     <TableCell>{vendor.name}</TableCell>
@@ -167,7 +178,7 @@ export default function Home() {
                     </TableCell>
                   </TableRow>
                 ))}
-                {vendors.length === 0 && (
+                {filteredVendors.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={7} align="center">
                       No vendors available.

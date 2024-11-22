@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { Box, TextField } from '@mui/material';
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-
+const SearchBar = ({ onSearch, vendors }) => {
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+    const query = event.target.value.toLowerCase();
+
+    // Filter results
+    const filteredVendors = vendors.filter((vendor) => 
+        vendor.name.toLowerCase().includes(query) ||
+        vendor.contact.toLowerCase().includes(query) ||
+        vendor.email.toLowerCase().includes(query) ||
+        vendor.id.toString().includes(query) ||
+        vendor.phone.toString().includes(query) ||
+        vendor.address.toString().toLowerCase().includes(query)
+    )
+
+    onSearch(filteredVendors);
   };
 
   return (
@@ -20,7 +30,6 @@ const SearchBar = () => {
         <TextField
         label="Search"
         variant="outlined"
-        value={searchTerm}
         onChange={handleSearch}
         sx={{
             width: '400px',
