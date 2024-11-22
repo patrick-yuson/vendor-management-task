@@ -21,6 +21,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchBar from '@/components/SearchBar';
 
 export default function Home() {
   const [vendors, setVendors] = useState([]);
@@ -123,58 +124,61 @@ export default function Home() {
             </Box>
           </Box>
         )) : (
-          <TableContainer component={Paper} sx={{ overflowX: 'scroll' }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>ID</strong></TableCell>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell><strong>Contact</strong></TableCell>
-                  <TableCell><strong>Email</strong></TableCell>
-                  <TableCell><strong>Phone</strong></TableCell>
-                  <TableCell><strong>Address</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {vendors.map((vendor) => (
-                  <TableRow key={vendor.id}>
-                    <TableCell>{vendor.id}</TableCell>
-                    <TableCell>{vendor.name}</TableCell>
-                    <TableCell>{vendor.contact}</TableCell>
-                    <TableCell>{vendor.email}</TableCell>
-                    <TableCell>{vendor.phone}</TableCell>
-                    <TableCell>{vendor.address}</TableCell>
-                    <TableCell>
-                      <Link href={`/edit/${vendor.id}`} passHref>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          style={{ marginRight: '10px' }}
-                        >
-                          Edit
-                        </Button>
-                      </Link>
-                      <IconButton
-                        color="secondary"
-                        onClick={() => handleClickOpen(vendor.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {vendors.length === 0 && (
+          <Box>
+            <SearchBar />
+            <TableContainer component={Paper} sx={{ overflowX: 'scroll' }}>
+              <Table>
+                <TableHead>
                   <TableRow>
-                    <TableCell colSpan={7} align="center">
-                      No vendors available.
-                    </TableCell>
+                    <TableCell><strong>ID</strong></TableCell>
+                    <TableCell><strong>Name</strong></TableCell>
+                    <TableCell><strong>Contact</strong></TableCell>
+                    <TableCell><strong>Email</strong></TableCell>
+                    <TableCell><strong>Phone</strong></TableCell>
+                    <TableCell><strong>Address</strong></TableCell>
+                    <TableCell><strong>Actions</strong></TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {vendors.map((vendor) => (
+                    <TableRow key={vendor.id}>
+                      <TableCell>{vendor.id}</TableCell>
+                      <TableCell>{vendor.name}</TableCell>
+                      <TableCell>{vendor.contact}</TableCell>
+                      <TableCell>{vendor.email}</TableCell>
+                      <TableCell>{vendor.phone}</TableCell>
+                      <TableCell>{vendor.address}</TableCell>
+                      <TableCell>
+                        <Link href={`/edit/${vendor.id}`} passHref>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            size="small"
+                            style={{ marginRight: '10px' }}
+                          >
+                            Edit
+                          </Button>
+                        </Link>
+                        <IconButton
+                          color="secondary"
+                          onClick={() => handleClickOpen(vendor.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {vendors.length === 0 && (
+                    <TableRow>
+                      <TableCell colSpan={7} align="center">
+                        No vendors available.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         )}
 
         {/* Confirmation Dialog */}
