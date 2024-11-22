@@ -11,6 +11,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   Paper,
   IconButton,
@@ -28,6 +29,8 @@ export default function Home() {
   const [filteredVendors, setFilteredVendors] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedVendorId, setSelectedVendorId] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { isMobileView, isMediumView } = useMobile(); 
 
   useEffect(() => {
@@ -51,6 +54,15 @@ export default function Home() {
 
   const handleSearch = (value) => {
     setFilteredVendors(value);
+  }
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   }
 
   const handleDelete = async () => {
@@ -136,7 +148,7 @@ export default function Home() {
             </Box>
           </Box>
         )) : (
-          <TableContainer component={Paper} sx={{ overflowX: 'scroll' }}>
+          <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -150,34 +162,38 @@ export default function Home() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredVendors.map((vendor) => (
-                  <TableRow key={vendor.id}>
-                    <TableCell>{vendor.id}</TableCell>
-                    <TableCell>{vendor.name}</TableCell>
-                    <TableCell>{vendor.contact}</TableCell>
-                    <TableCell>{vendor.email}</TableCell>
-                    <TableCell>{vendor.phone}</TableCell>
-                    <TableCell>{vendor.address}</TableCell>
-                    <TableCell>
-                      <Link href={`/edit/${vendor.id}`} passHref>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          size="small"
-                          style={{ marginRight: '10px' }}
+                {filteredVendors
+                  // Slice filteredVendors to account for pagination
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((vendor) => (
+                    <TableRow key={vendor.id}>
+                      <TableCell>{vendor.id}</TableCell>
+                      <TableCell>{vendor.name}</TableCell>
+                      <TableCell>{vendor.contact}</TableCell>
+                      <TableCell>{vendor.email}</TableCell>
+                      <TableCell>{vendor.phone}</TableCell>
+                      <TableCell>{vendor.address}</TableCell>
+                      <TableCell>
+                        <Link href={`/edit/${vendor.id}`} passHref>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            size="small"
+                            style={{ marginRight: '10px' }}
+                          >
+                            Edit
+                          </Button>
+                        </Link>
+                        <IconButton
+                          color="secondary"
+                          onClick={() => handleClickOpen(vendor.id)}
                         >
-                          Edit
-                        </Button>
-                      </Link>
-                      <IconButton
-                        color="secondary"
-                        onClick={() => handleClickOpen(vendor.id)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
                 {filteredVendors.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={7} align="center">
@@ -187,6 +203,19 @@ export default function Home() {
                 )}
               </TableBody>
             </Table>
+            <TablePagination 
+              component="div"
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              count={filteredVendors.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handlePageChange}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            />
           </TableContainer>
         )}
 
