@@ -9,18 +9,74 @@
   },
   {
     "id": 2,
-    "name": "Global Tech",
-    "contact": "Jane Smith",
-    "email": "jane@globaltech.com",
+    "name": "Wayne Enterprises Supplies",
+    "contact": "Lucius Fox",
+    "email": "lucius@wayneenterprises.com",
     "phone": "555-5678",
-    "address": "456 Oak Avenue, Metropolis"
+    "address": "1007 Mountain Drive, Gotham City"
   },
   {
     "id": 3,
-    "name": "Supply Hub",
-    "contact": "Mike Johnson",
-    "email": "mike@supplyhub.com",
+    "name": "Queen Consolidated Goods",
+    "contact": "Felicity Smoak",
+    "email": "felicity@queenconsolidated.com",
     "phone": "555-8765",
-    "address": "789 Pine Road, Gotham"
+    "address": "789 Pine Road, Star City"
+  },
+  {
+    "id": 4,
+    "name": "LexCorp Logistics",
+    "contact": "Tess Mercer",
+    "email": "tess@lexcorp.com",
+    "phone": "555-3456",
+    "address": "1 LexCorp Plaza, Metropolis"
+  },
+  {
+    "id": 5,
+    "name": "Kord Industries",
+    "contact": "Ted Kord",
+    "email": "ted@kordindustries.com",
+    "phone": "555-2345",
+    "address": "202 Technology Drive, Hub City"
+  },
+  {
+    "id": 6,
+    "name": "Stagg Enterprises",
+    "contact": "Simon Stagg",
+    "email": "simon@staggenterprises.com",
+    "phone": "555-6789",
+    "address": "303 Innovation Way, Central City"
+  },
+  {
+    "id": 7,
+    "name": "S.T.A.R. Labs",
+    "contact": "Harrison Wells",
+    "email": "wells@starlabs.com",
+    "phone": "555-8901",
+    "address": "404 Science Drive, Central City"
+  },
+  {
+    "id": 8,
+    "name": "Daily Planet Supplies",
+    "contact": "Lois Lane",
+    "email": "lois@dailyplanet.com",
+    "phone": "555-4321",
+    "address": "505 Journalism Lane, Metropolis"
+  },
+  {
+    "id": 9,
+    "name": "Big Belly Burger Logistics",
+    "contact": "Harold Jordan",
+    "email": "hal@bigbellyburger.com",
+    "phone": "555-5670",
+    "address": "606 Appetite Street, Coast City"
+  },
+  {
+    "id": 10,
+    "name": "Atlantis Imports",
+    "contact": "Arthur Curry",
+    "email": "arthur@atlantisimports.com",
+    "phone": "555-7890",
+    "address": "707 Ocean Avenue, Amnesty Bay"
   }
 ]
