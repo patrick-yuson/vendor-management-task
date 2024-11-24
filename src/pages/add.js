@@ -27,33 +27,44 @@ export default function AddVendor() {
 
   const router = useRouter();
 
-  // TODO: Add data validation
   const handleChange = (e) => {
     const field = e.target.name;
     const containsNumbersRegex = /\d/;
     switch(field) {
       case 'contact':
         if (containsNumbersRegex.test(e.target.value)) {
-          formErrors.contact = 'Contact Name may not contain numbers';
+          setFormErrors({
+            contact: 'Contact Name may not contain numbers'
+          });
         } else {
-          formErrors.contact = '';
+          setFormErrors({
+            contact: ''
+          });
         }
         break;
       case 'email':
         // Checks for the pattern: any-case string + '@' + any-case string + '.' + any-case string
         const emailRegex = /\S+@\S+\.\S+/;
         if (!emailRegex.test(e.target.value)) {
-          formErrors.email = 'Invalid email address';
+          setFormErrors({
+            email: 'Invalid email address'
+          });
         } else {
-          formErrors.email = '';
+          setFormErrors({
+            email: ''
+          });
         }
         break;
       case 'phone':
         const phoneRegex = /^\d{3}-\d{4}$/;
         if (!phoneRegex.test(e.target.value)) {
-          formErrors.phone = 'Invalid phone number';
+          setFormErrors({
+            phone: 'Invalid phone number'
+          });
         } else {
-          formErrors.phone = '';
+          setFormErrors({
+            phone: ''
+          });
         }
     }
     setVendor({ ...vendor, [e.target.name]: e.target.value });

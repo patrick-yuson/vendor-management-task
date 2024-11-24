@@ -19,6 +19,13 @@ export default function EditVendor() {
     phone: '',
     address: '',
   });
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    contact: '',
+    email: '',
+    phone: '',
+    address: ''
+  });
 
   useEffect(() => {
     if (id) {
@@ -35,8 +42,46 @@ export default function EditVendor() {
     }
   }, [id]);
 
-  // TODO: Add input validation
   const handleChange = (e) => {
+    const field = e.target.name;
+    const containsNumbersRegex = /\d/;
+    switch(field) {
+      case 'contact':
+        if (containsNumbersRegex.test(e.target.value)) {
+          setFormErrors({
+            contact: 'Contact Name may not contain numbers'
+          });
+        } else {
+          setFormErrors({
+            contact: ''
+          });
+        }
+        break;
+      case 'email':
+        // Checks for the pattern: any-case string + '@' + any-case string + '.' + any-case string
+        const emailRegex = /\S+@\S+\.\S+/;
+        if (!emailRegex.test(e.target.value)) {
+          setFormErrors({
+            email: 'Invalid email address'
+          });
+        } else {
+          setFormErrors({
+            email: ''
+          });
+        }
+        break;
+      case 'phone':
+        const phoneRegex = /^\d{3}-\d{4}$/;
+        if (!phoneRegex.test(e.target.value)) {
+          setFormErrors({
+            phone: 'Invalid phone number'
+          });
+        } else {
+          setFormErrors({
+            phone: ''
+          });
+        }
+    }
     setVendor({ ...vendor, [e.target.name]: e.target.value });
   };
 
@@ -75,6 +120,8 @@ export default function EditVendor() {
           name="contact"
           value={vendor.contact}
           onChange={handleChange}
+          error={!!formErrors.contact}
+          helperText={formErrors.contact || ''}
         />
         <TextField
           margin="normal"
@@ -85,6 +132,8 @@ export default function EditVendor() {
           type="email"
           value={vendor.email}
           onChange={handleChange}
+          error={!!formErrors.email}
+          helperText={formErrors.email || ''}
         />
         <TextField
           margin="normal"
@@ -94,6 +143,8 @@ export default function EditVendor() {
           name="phone"
           value={vendor.phone}
           onChange={handleChange}
+          error={!!formErrors.phone}
+          helperText={formErrors.phone || ''}
         />
         <TextField
           margin="normal"
