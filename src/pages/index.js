@@ -52,6 +52,13 @@ export default function Home() {
     setSelectedVendorId(null);
   };
 
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  }
+
   const handleSearch = (value) => {
     setFilteredVendors(value);
   }
@@ -63,6 +70,17 @@ export default function Home() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  }
+
+  const getCategoryColor = (category) => {
+    switch(category) {
+      case 'Utensils':
+        return '#ffc043';
+      case 'Packaging':
+        return '#65df7d';
+      case 'Containers':
+        return '#ff9999';
+    }
   }
 
   const handleDelete = async () => {
@@ -95,7 +113,7 @@ export default function Home() {
   };
 
   return (
-    <Container style={{ padding: '0px', marginTop: '75px' }}>
+    <Container maxWidth='100%' style={{ padding: '0px', margin: '75px 0px 0px 0px' }}>
       {/* <Link href="/add" passHref>
         <Button variant="contained" color="primary" style={{ marginBottom: '20px' }}>
           Add Vendor
@@ -157,12 +175,15 @@ export default function Home() {
             </Box>
           </Box>
         )) : (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ width: '100%' }}>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell><strong>ID</strong></TableCell>
                   <TableCell><strong>Name</strong></TableCell>
+                  <TableCell>
+                    <strong>Category</strong>
+                  </TableCell>
                   <TableCell><strong>Contact</strong></TableCell>
                   <TableCell><strong>Email</strong></TableCell>
                   <TableCell><strong>Phone</strong></TableCell>
@@ -178,6 +199,20 @@ export default function Home() {
                     <TableRow key={vendor.id}>
                       <TableCell>{vendor.id}</TableCell>
                       <TableCell>{vendor.name}</TableCell>
+                      <TableCell>
+                        <Box
+                          sx={{
+                            display: 'inline-block',
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            color: '#000',
+                            backgroundColor: getCategoryColor(vendor.category),
+                            textAlign: 'center'
+                          }}
+                        >
+                          {vendor.category}
+                        </Box>
+                      </TableCell>
                       <TableCell>{vendor.contact}</TableCell>
                       <TableCell>{vendor.email}</TableCell>
                       <TableCell>{vendor.phone}</TableCell>
