@@ -46,6 +46,7 @@ export default function Home() {
       });
   }, []);
 
+  /* Filtering Logic */
   useEffect(() => {
     // Sort filteredVendors
     const newVendors = [...filteredVendors]
@@ -79,6 +80,7 @@ export default function Home() {
     handleRequestSort(event, property);
   }
 
+  // Handles Dialog Open
   const handleClickOpen = (id) => {
     setSelectedVendorId(id);
     setOpen(true);
@@ -89,17 +91,11 @@ export default function Home() {
     setSelectedVendorId(null);
   };
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  }
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  }
-
   const handleSearch = (value) => {
     setFilteredVendors(value);
   }
 
+  /* Pagination */
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   }
@@ -118,10 +114,6 @@ export default function Home() {
       case 'Containers':
         return '#ff9999';
     }
-  }
-
-  const handleFilter = (id) => {
-    // TODO
   }
 
   const handleDelete = async () => {
@@ -177,8 +169,20 @@ export default function Home() {
             component={Paper}
           >
             {/* <Box sx={{ textAlign: 'center' }}> */}
-            <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Typography variant="h6"><strong>{vendor.name}</strong></Typography>
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  padding: '4px 8px',
+                  borderRadius: '4px',
+                  color: '#000',
+                  backgroundColor: getCategoryColor(vendor.category),
+                  textAlign: 'center'
+                }}
+              >
+                <strong>{vendor.category}</strong>
+              </Box>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
               <Typography><strong>Contact:</strong></Typography>
@@ -240,34 +244,6 @@ export default function Home() {
                       >
                         <strong>{column.label}</strong>
                       </TableSortLabel>
-                      {/* <Box
-                        sx={{
-                          position: 'relative',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          '&:hover .filter-button': {
-                            opacity: 1,
-                            visibility: 'visible',
-                          },
-                        }}
-                      >
-                        <strong>{column.label}</strong>
-                        <IconButton
-                          className='filter-button'
-                          size="small"
-                          onClick={() => handleFilter(column.id)}
-                          sx={{
-                            position: 'absolute',
-                            right: '-30px',
-                            opacity: 0,
-                            visibility: 'hidden',
-                            transition: 'opacity 0.2s, visibility 0.2s'
-                          }}
-                        >
-                          <FilterListIcon />
-                        </IconButton>
-                    </Box> */}
                   </TableCell>
                   ))}
                 </TableRow>
