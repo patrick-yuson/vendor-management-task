@@ -7,6 +7,9 @@ import {
   TextField,
   Button,
   Box,
+  Select,
+  InputLabel,
+  MenuItem
 } from '@mui/material';
 
 export default function EditVendor() {
@@ -14,6 +17,7 @@ export default function EditVendor() {
   const { id } = router.query;
   const [vendor, setVendor] = useState({
     name: '',
+    category: '',
     contact: '',
     email: '',
     phone: '',
@@ -21,6 +25,7 @@ export default function EditVendor() {
   });
   const [formErrors, setFormErrors] = useState({
     name: '',
+    category: '',
     contact: '',
     email: '',
     phone: '',
@@ -110,6 +115,21 @@ export default function EditVendor() {
           value={vendor.name}
           onChange={handleChange}
         />
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <InputLabel id="vendor-category">Category</InputLabel>
+          <Select
+            style={{ width: '50%' }}
+            labelId="vendor-category"
+            name="category"
+            value={vendor.category}
+            onChange={handleChange}
+            required
+          >
+            <MenuItem value={'Utensils'}>Utensils</MenuItem>
+            <MenuItem value={'Packaging'}>Packaging</MenuItem>
+            <MenuItem value={'Containers'}>Containers</MenuItem>
+          </Select>
+        </Box>
         <TextField
           margin="normal"
           required
