@@ -94,14 +94,12 @@ export default function EditVendor() {
     });
     if (res.ok) {
       router.push('/');
+      alert('Vendor successfully updated!');
     }
   };
 
   return (
     <Container maxWidth="sm">
-      {/* <Typography variant="h4" component="h1" gutterBottom>
-        Edit Vendor
-      </Typography> */}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '75px' }}>
         <TextField
           margin="normal"

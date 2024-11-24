@@ -79,14 +79,12 @@ export default function AddVendor() {
     });
     if (res.ok) {
       router.push('/');
+      alert('Vendor successfully added!');
     }
   };
 
   return (
     <Container maxWidth="sm">
-      {/* <Typography variant="h4" component="h1" gutterBottom>
-        Add New Vendor
-      </Typography> */}
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: '75px' }}>
         <Typography />
         <TextField

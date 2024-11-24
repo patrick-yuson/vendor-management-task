@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useMobile } from '@/contexts/MobileContext';
 import Box from '@mui/material/Box';
@@ -16,7 +16,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StoreIcon from '@mui/icons-material/Store';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import StarIcon from '@mui/icons-material/Star';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 
@@ -27,6 +26,14 @@ export default function Navbar({ mainComponent }) {
   const [isOpen, setIsOpen] = useState(false);
   const { isMobileView, isMediumView } = useMobile(); 
   const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname === '/add') {
+      setSelectedIndex(1);
+    } else if (router.pathname.includes('edit')) {
+      setSelectedIndex(2);
+    }
+  }, [router]);
 
   const handleItemClick = (index, path) => {
     setSelectedIndex(index);
@@ -42,19 +49,21 @@ export default function Navbar({ mainComponent }) {
 
   const navItems = [
     {
-        text: 'All Vendors',
-        path: '/'
+      text: 'All Vendors',
+      path: '/',
+      display: true
     },
     {
-        text: 'Add Vendor',
-        path: '/add'
+      text: 'Add Vendor',
+      path: '/add',
+      display: true
     },
     {
-        // TODO: Add starred path
-        text: 'Starred',
-        path: ''
+      text: 'Edit Vendor',
+      path: '/edit',
+      display: false
     }
-  ]
+  ];
 
   const getIcon = (type) => {
     switch(type) {
@@ -66,13 +75,7 @@ export default function Navbar({ mainComponent }) {
       case 'Add Vendor':
         return (
             <AddBusinessIcon />
-        )
-      case 'Starred':
-        return (
-            <StarIcon />
-        )
-      default:
-        console.log('No icon for ', type);
+        );
     }
   }
 
@@ -80,7 +83,6 @@ export default function Navbar({ mainComponent }) {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
-        // position="fixed"
         sx={{ width: { md: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` } }}
       >
         <Toolbar>
@@ -120,7 +122,7 @@ export default function Navbar({ mainComponent }) {
         <Divider />
         <List>
           {navItems.map((item, index) => (
-            <ListItem key={item.text} disablePadding>
+            <ListItem key={item.text} disablePadding sx={{ display: item.display ? '' : 'none' }}>
               <ListItemButton
                 selected={selectedIndex === index}
                 onClick={() => handleItemClick(index, item.path)}
