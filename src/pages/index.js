@@ -74,6 +74,15 @@ export default function Home() {
       if (res.ok) {
         // Remove the deleted vendor from the state
         setVendors(vendors.filter((vendor) => vendor.id !== selectedVendorId));
+        // Update filteredVendors state
+        const updatedFilteredVendors = filteredVendors.filter((vendor) => vendor.id !== selectedVendorId)
+        setFilteredVendors(updatedFilteredVendors);
+
+        // Update pagination if deleting vendor empties a page
+        if (updatedFilteredVendors.length <= page * rowsPerPage && page > 0) {
+          setPage(page - 1);
+        }
+        // Update display
         handleClose();
       } else {
         console.error('Failed to delete the vendor.');
