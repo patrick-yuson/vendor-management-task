@@ -13,6 +13,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TableSortLabel,
   Paper,
   IconButton,
   Dialog,
@@ -22,6 +23,7 @@ import {
   DialogTitle,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchBar from '@/components/SearchBar';
 
 export default function Home() {
@@ -31,6 +33,8 @@ export default function Home() {
   const [selectedVendorId, setSelectedVendorId] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('id');
   const { isMobileView, isMediumView } = useMobile(); 
 
   useEffect(() => {
@@ -41,6 +45,39 @@ export default function Home() {
         setFilteredVendors(data)
       });
   }, []);
+
+  useEffect(() => {
+    // Sort filteredVendors
+    const newVendors = [...filteredVendors]
+      .sort(getComparator(order, orderBy))
+
+    setFilteredVendors(newVendors);
+  }, [order, orderBy])
+
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function getComparator(order, orderBy) {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  }
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property);
+  }
 
   const handleClickOpen = (id) => {
     setSelectedVendorId(id);
@@ -81,6 +118,10 @@ export default function Home() {
       case 'Containers':
         return '#ff9999';
     }
+  }
+
+  const handleFilter = (id) => {
+    // TODO
   }
 
   const handleDelete = async () => {
@@ -179,16 +220,56 @@ export default function Home() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell><strong>ID</strong></TableCell>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell>
-                    <strong>Category</strong>
+                  {[
+                    { id: 'id', label: 'ID' },
+                    { id: 'name', label: 'Name' },
+                    { id: 'category', label: 'Category' },
+                    { id: 'contact', label: 'Contact' },
+                    { id: 'email', label: 'Email' },
+                    { id: 'phone', label: 'Phone' },
+                    { id: 'address', label: 'Address' }
+                  ].map((column) => (
+                    <TableCell 
+                      key={column.id}
+                      sortDirection={orderBy === column.id ? order : false}
+                    >
+                      <TableSortLabel
+                        active={orderBy === column.id}
+                        direction={orderBy === column.id ? order : 'asc'}
+                        onClick={createSortHandler(column.id)}
+                      >
+                        <strong>{column.label}</strong>
+                      </TableSortLabel>
+                      {/* <Box
+                        sx={{
+                          position: 'relative',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          '&:hover .filter-button': {
+                            opacity: 1,
+                            visibility: 'visible',
+                          },
+                        }}
+                      >
+                        <strong>{column.label}</strong>
+                        <IconButton
+                          className='filter-button'
+                          size="small"
+                          onClick={() => handleFilter(column.id)}
+                          sx={{
+                            position: 'absolute',
+                            right: '-30px',
+                            opacity: 0,
+                            visibility: 'hidden',
+                            transition: 'opacity 0.2s, visibility 0.2s'
+                          }}
+                        >
+                          <FilterListIcon />
+                        </IconButton>
+                    </Box> */}
                   </TableCell>
-                  <TableCell><strong>Contact</strong></TableCell>
-                  <TableCell><strong>Email</strong></TableCell>
-                  <TableCell><strong>Phone</strong></TableCell>
-                  <TableCell><strong>Address</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
+                  ))}
                 </TableRow>
               </TableHead>
               <TableBody>
