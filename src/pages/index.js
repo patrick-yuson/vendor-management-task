@@ -147,11 +147,6 @@ export default function Home() {
 
   return (
     <Container maxWidth='100%' style={{ padding: '0px', margin: '75px 0px 0px 0px' }}>
-      {/* <Link href="/add" passHref>
-        <Button variant="contained" color="primary" style={{ marginBottom: '20px' }}>
-          Add Vendor
-        </Button>
-      </Link> */}
       <SearchBar 
         onSearch={handleSearch}
         vendors={vendors}
@@ -342,6 +337,11 @@ export default function Home() {
             </Button>
           </DialogActions>
         </Dialog>
+        <Link href="/add" passHref>
+          <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
+            Add Vendor
+          </Button>
+        </Link>
     </Container>
   );
 }
