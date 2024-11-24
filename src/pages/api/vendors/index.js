@@ -7,8 +7,10 @@ export default function handler(req, res) {
   const jsonData = fs.readFileSync(filePath);
   let vendors = JSON.parse(jsonData);
 
+  // Method to get vendors.json
   if (req.method === 'GET') {
     res.status(200).json(vendors);
+  // Method to create a vendor
   } else if (req.method === 'POST') {
     const newVendor = req.body;
     newVendor.id = vendors.length ? vendors[vendors.length - 1].id + 1 : 1;

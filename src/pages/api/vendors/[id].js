@@ -21,11 +21,13 @@ export default function handler(req, res) {
 
   if (method === 'GET') {
     res.status(200).json(vendors[vendorIndex]);
+  // Method to update a vendor
   } else if (method === 'PUT') {
     const updatedVendor = { ...vendors[vendorIndex], ...body };
     vendors[vendorIndex] = updatedVendor;
     fs.writeFileSync(filePath, JSON.stringify(vendors, null, 2));
     res.status(200).json(updatedVendor);
+  // Method to delete a vendor
   } else if (method === 'DELETE') {
     vendors.splice(vendorIndex, 1);
     fs.writeFileSync(filePath, JSON.stringify(vendors, null, 2));

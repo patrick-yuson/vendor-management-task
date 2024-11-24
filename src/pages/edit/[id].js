@@ -35,6 +35,7 @@ export default function EditVendor() {
     }
   }, [id]);
 
+  // TODO: Add input validation
   const handleChange = (e) => {
     setVendor({ ...vendor, [e.target.name]: e.target.value });
   };
@@ -53,10 +54,10 @@ export default function EditVendor() {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" component="h1" gutterBottom>
+      {/* <Typography variant="h4" component="h1" gutterBottom>
         Edit Vendor
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      </Typography> */}
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: '75px' }}>
         <TextField
           margin="normal"
           required
